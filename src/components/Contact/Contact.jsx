@@ -1,5 +1,5 @@
-import styles from './contact.module.css';
 import { FaUser, FaPhone } from 'react-icons/fa';
+import styles from './contact.module.css';
 
 const ContactItem = ({ contact, onDelete }) => {
   const handleDelete = () => {
