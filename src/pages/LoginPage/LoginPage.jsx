@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useNavigate } from 'react-router-dom'; // Импортируем хук useNavigate
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { login } from '../../redux/auth/operations';
 import styles from './loginPage.module.css';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Создаем экземпляр useNavigate
+  const navigate = useNavigate();
 
   const initialValues = {
     email: '',
@@ -27,14 +27,13 @@ const LoginPage = () => {
     dispatch(login(values))
       .unwrap()
       .then(() => {
-        navigate('/contacts'); // Перенаправление на страницу контактов
+        navigate('/contacts');
         setSubmitting(false);
         resetForm();
       })
       .catch(error => {
         console.error('Login failed:', error);
         setSubmitting(false);
-        // Можно добавить обработку ошибок, например, вывод сообщения пользователю
       });
   };
 

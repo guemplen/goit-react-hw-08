@@ -1,4 +1,4 @@
-import AppBar from '../AppBar/AppBar'; // Припустимо, що цей компонент у вас вже є
+import AppBar from '../AppBar/AppBar';
 
 const Layout = ({ children }) => {
   return (

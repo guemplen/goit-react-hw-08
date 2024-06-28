@@ -32,7 +32,7 @@ export const logout = createAsyncThunk(
     await axios.post('/users/logout');
     token.unset();
     dispatch(clearContacts());
-    persistor.purge(); // Очищаем локальное хранилище
+    persistor.purge();
   }
 );
 

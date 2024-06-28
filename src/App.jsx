@@ -12,7 +12,7 @@ import ContactsPage from './pages/ContactsPage/ContactsPage';
 import Layout from './components/Layout/Layout';
 
 const App = () => {
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn); // Предполагаем, что статус авторизации хранится в state.auth.isLoggedIn
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
   return (
     <Router>
