@@ -1,0 +1,47 @@
+.loginBox {
+  margin-top: 20px;
+  margin-right: 50%;
+  padding: 20px;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+
+.formGroup {
+  margin: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.errorInput {
+  border-color: red;
+}
+
+.errorMsg {
+  color: red;
+  font-size: 0.8rem;
+}
+
+.submitButton {
+  width: 95%;
+  padding: 10px;
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: black;
+}

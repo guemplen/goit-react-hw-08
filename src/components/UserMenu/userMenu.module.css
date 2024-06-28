@@ -1,0 +1,31 @@
+.userMenu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 50px;
+}
+
+.logoutButton {
+  background-color: gray;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.logoutButton:hover {
+  background-color: black;
+}
