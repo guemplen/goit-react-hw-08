@@ -1,10 +1,5 @@
-.appBar {
+.navigation {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background-color: grey;
-  color: white;
 }
 
 .link {
@@ -13,6 +8,10 @@
   text-decoration: none;
   padding: 10px;
   margin-right: 10px;
+}
+
+.link:last-child {
+  margin-right: 0;
 }
 
 .link:hover {

@@ -1,46 +1,70 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { clearContacts } from '../contacts/slice';
+import { clearAuthState } from './slice';
 import { persistor } from '../store';
 
-axios.defaults.baseURL = 'https://connections-api.goit.global';
+axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
-const token = {
-  set(token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  },
-  unset() {
-    axios.defaults.headers.common.Authorization = '';
-  },
+const setAuthHeader = token => {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-export const register = createAsyncThunk('auth/register', async credentials => {
-  const response = await axios.post('/users/signup', credentials);
-  token.set(response.data.token);
-  return response.data;
-});
+const clearAuthHeader = () => {
+  axios.defaults.headers.common['Authorization'] = '';
+};
 
-export const login = createAsyncThunk('auth/login', async credentials => {
-  const response = await axios.post('/users/login', credentials);
-  token.set(response.data.token);
-  return response.data;
-});
+export const register = createAsyncThunk(
+  'auth/register',
+  async (credentials, thunkAPI) => {
+    try {
+      const response = await axios.post('/users/signup', credentials);
+      setAuthHeader(response.data.token);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const login = createAsyncThunk(
+  'auth/login',
+  async (credentials, thunkAPI) => {
+    try {
+      const response = await axios.post('/users/login', credentials);
+      setAuthHeader(response.data.token);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const logout = createAsyncThunk(
   'auth/logout',
-  async (_, { dispatch }) => {
-    await axios.post('/users/logout');
-    token.unset();
-    dispatch(clearContacts());
-    persistor.purge();
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      await axios.post('/users/logout');
+      clearAuthHeader();
+      dispatch(clearContacts());
+      dispatch(clearAuthState());
+      persistor.purge();
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
 export const refreshUser = createAsyncThunk(
   'auth/refresh',
-  async (persistedToken, { dispatch }) => {
-    token.set(persistedToken);
-    const response = await axios.get('/users/current');
-    return response.data;
+  async (persistedToken, { rejectWithValue }) => {
+    try {
+      setAuthHeader(persistedToken);
+      const response = await axios.get('/users/current');
+      return response.data;
+    } catch (error) {
+      clearAuthHeader();
+      return rejectWithValue(error.response.data);
+    }
   }
 );

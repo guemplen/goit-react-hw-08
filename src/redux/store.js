@@ -13,21 +13,10 @@ const authPersistConfig = {
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
-const contactsPersistConfig = {
-  key: 'contacts',
-  storage,
-  blacklist: ['loading', 'error'],
-};
-
-const persistedContactsReducer = persistReducer(
-  contactsPersistConfig,
-  contactsReducer
-);
-
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
-    contacts: persistedContactsReducer,
+    contacts: contactsReducer,
     filters: filtersReducer,
   },
   middleware: getDefaultMiddleware =>

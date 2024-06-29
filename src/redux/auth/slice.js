@@ -1,42 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-axios.defaults.baseURL = 'https://connections-api.goit.global';
-
-const token = {
-  set(token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  },
-  unset() {
-    axios.defaults.headers.common.Authorization = '';
-  },
-};
-
-export const register = createAsyncThunk('auth/register', async credentials => {
-  const response = await axios.post('/users/signup', credentials);
-  token.set(response.data.token);
-  return response.data;
-});
-
-export const login = createAsyncThunk('auth/login', async credentials => {
-  const response = await axios.post('/users/login', credentials);
-  token.set(response.data.token);
-  return response.data;
-});
-
-export const logout = createAsyncThunk('auth/logout', async () => {
-  await axios.post('/users/logout');
-  token.unset();
-});
-
-export const refreshUser = createAsyncThunk(
-  'auth/refresh',
-  async (persistedToken, thunkAPI) => {
-    token.set(persistedToken);
-    const response = await axios.get('/users/current');
-    return response.data;
-  }
-);
+import { createSlice } from '@reduxjs/toolkit';
+import { register, login, logout, refreshUser } from './operations';
 
 const initialState = {
   user: { name: null, email: null },
@@ -74,9 +37,16 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
         state.isRefreshing = false;
       })
+      .addCase(refreshUser.pending, state => {
+        state.isRefreshing = true;
+      })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, state => {
+        state.isRefreshing = false;
       });
   },
 });

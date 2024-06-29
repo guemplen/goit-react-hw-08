@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import Navigation from '../Navigation/Navigation';
+import AuthNav from '../AuthNav/AuthNav';
 import UserMenu from '../UserMenu/UserMenu';
 import styles from './appBar.module.css';
 
@@ -8,30 +9,8 @@ const AppBar = () => {
 
   return (
     <header className={styles.appBar}>
-      <div>
-        <Link to="/" className={styles.logo}>
-          Home
-        </Link>
-        {isLoggedIn && (
-          <Link to="/contacts" className={styles.logo}>
-            PhoneBook
-          </Link>
-        )}
-      </div>
-      <nav>
-        {isLoggedIn ? (
-          <UserMenu />
-        ) : (
-          <>
-            <Link to="/login" className={styles.navItem}>
-              Login
-            </Link>
-            <Link to="/register" className={styles.navItem}>
-              Register
-            </Link>
-          </>
-        )}
-      </nav>
+      <Navigation />
+      {isLoggedIn ? <UserMenu /> : <AuthNav />}
     </header>
   );
 };

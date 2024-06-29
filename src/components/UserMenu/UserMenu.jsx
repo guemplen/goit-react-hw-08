@@ -19,7 +19,7 @@ const UserMenu = () => {
     <div className={styles.userMenu}>
       <div className={styles.userInfo}>
         <FaUserAlt className={styles.icon} />
-        <span>Welcome, {user.name}</span>
+        <span>Welcome, {user?.name || 'Guest'}</span>
       </div>
       <button
         className={styles.logoutButton}
