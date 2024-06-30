@@ -38,6 +38,14 @@ button:hover {
   background-color: black;
 }
 
+.filter {
+  width: 49%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
 .list {
   list-style-type: none;
   padding: 0;

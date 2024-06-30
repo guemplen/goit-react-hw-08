@@ -6,11 +6,13 @@ import {
   addContact,
   deleteContact,
 } from '../../redux/contacts/operations';
+import { changeFilter } from '../../redux/filters/slice';
 import styles from './contactsPage.module.css';
 import ContactItem from '../../components/Contact/Contact';
 
 const ContactPage = () => {
   const contacts = useSelector(selectFilteredContacts);
+  const filter = useSelector(state => state.filters.name);
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -29,6 +31,10 @@ const ContactPage = () => {
     dispatch(addContact({ name, number }));
     setName('');
     setNumber('');
+  };
+
+  const handleFilterChange = e => {
+    dispatch(changeFilter(e.target.value));
   };
 
   return (
@@ -56,6 +62,13 @@ const ContactPage = () => {
         </div>
         <button type="submit">Add Contact</button>
       </form>
+      <input
+        className={styles.filter}
+        type="text"
+        value={filter}
+        onChange={handleFilterChange}
+        placeholder="Filter contacts by name"
+      />
       <ul className={styles.list}>
         {contacts.map(contact => (
           <ContactItem
